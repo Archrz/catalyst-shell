@@ -1,0 +1,90 @@
+pragma Singleton
+import QtQuick
+import QtCore
+import Quickshell
+import Quickshell.Io
+import Quickshell.Services.UPower
+
+Singleton {
+    id: root
+    property bool nightLightOn: true
+    property bool compositorEffectsOn: false
+
+    property int lastBrightness: 100
+    property int preSaverBrightness: 100
+    property int preSaverProfile: PowerProfile.Balanced
+    property bool isBatterySaverActive: false
+    property bool wasManuallyOverridden: false
+
+    Settings {
+        location: "file://" + Quickshell.env("HOME") + "/.config/catalyst/settings.conf"
+        category: "System"
+        property alias nightLightOn: root.nightLightOn
+        property alias lastBrightness: root.lastBrightness
+        property alias preSaverBrightness: root.preSaverBrightness
+        property alias preSaverProfile: root.preSaverProfile
+        property alias isBatterySaverActive: root.isBatterySaverActive
+        property alias wasManuallyOverridden: root.wasManuallyOverridden
+    }
+
+    Component.onCompleted: {
+        if (nightLightOn) {
+            Quickshell.execDetached(["/bin/bash", "-c", "~/.local/bin/nightlight.sh"])
+        }
+
+        BrightnessState.setBrightness(lastBrightness)
+    }
+
+    readonly property var caffeineModes: [0, 5, 10, 30, -1]
+    property int caffeineModeIndex: 0
+    property int caffeineMinutes: caffeineModes[caffeineModeIndex]
+    property bool caffeineOn: caffeineMinutes !== 0
+
+    property var _caffeineTimer: Timer {
+        id: caffeineTimer
+        interval: 1000
+        repeat: true
+        running: caffeineOn && caffeineMinutes > 0
+        property int remainingSeconds: 0
+
+        onRunningChanged: {
+            if (running) remainingSeconds = caffeineMinutes * 60
+        }
+        onTriggered: {
+            remainingSeconds -= 1
+            if (remainingSeconds <= 0) SystemTogglesState.disableCaffeine()
+        }
+    }
+
+    readonly property string caffeineCountdown: {
+        if (caffeineMinutes === -1) return "∞"
+        if (!caffeineOn) return ""
+        const s = _caffeineTimer.remainingSeconds
+        const m = Math.floor(s / 60)
+        const sec = s % 60
+        return m + ":" + (sec < 10 ? "0" : "") + sec
+    }
+
+    function cycleCaffeine() {
+        caffeineModeIndex = (caffeineModeIndex + 1) % caffeineModes.length
+        if (caffeineOn && caffeineMinutes > 0)
+            _caffeineTimer.remainingSeconds = caffeineMinutes * 60
+    }
+
+    function disableCaffeine() {
+        caffeineModeIndex = 0
+    }
+
+    function toggleNightLight() {
+        nightLightOn = !nightLightOn
+        if (nightLightOn) {
+            Quickshell.execDetached(["/bin/bash", "-c", "~/.local/bin/nightlight.sh"])
+        } else {
+            Quickshell.execDetached(["killall", "wlsunset"])
+        }
+    }
+
+    function toggleCompositorEffects() {
+        compositorEffectsOn = !compositorEffectsOn
+    }
+}

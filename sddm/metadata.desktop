@@ -1,0 +1,8 @@
+[SddmGreeterTheme]
+Name=catalyst-sddm
+Description=Catalyst login screen
+Author=arch
+ConfigFile=theme.conf
+Main=Main.qml
+Type=sddm-theme
+QtVersion=6
