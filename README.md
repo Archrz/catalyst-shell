@@ -6,10 +6,10 @@
 
 ---
 
-This project started out because I didn't like the way noctalia was going anymore.
+This project started out because I didn't like the way noctalia was going anymore.  
 It started out as a fork of [melatonia's](https://github.com/melatonia/meloworld-dotfiles/tree/main) quickshell but, quickly got changed over time.
 
-Catalyst-shell has borrowed alot from melatonia but, improves in speed, widgets, markup tools, and more.
+Catalyst-shell has borrowed alot from melatonia but, improves in speed, widgets, markup tools, and more.  
 Will be maintained for mangowm and become more personalized over time.
 
 ## Editing the bar
@@ -48,7 +48,7 @@ Order will be from left to right, so TrayBar - Tailscale - Audio - Date - Sessio
 
 Example:
 <div align="center">
-  <img src="images/rightbar.png" alt="rightbar" width="640">
+  <img src="images/rightbar.png" alt="rightbar">
 </div>
 
 ## Launcher
@@ -63,15 +63,15 @@ Opened with `catalyst-launcher`, which calls IPC command `launcher toggle`. Type
 
 Examples:
 <div align="center">
-  <img src="images/launcher.png" alt="launcher" width="640">
+  <img src="images/launcher.png" alt="launcher">
 </div>
 
 <div align="center">
-  <img src="images/clipboard.png" alt="clipboard" width="640">
+  <img src="images/clipboard.png" alt="clipboard">
 </div>
 
 <div align="center">
-  <img src="images/wallpaper.png" alt="wallpaper" width="640">
+  <img src="images/wallpaper.png" alt="wallpaper">
 </div>
 
 ## Media player
@@ -80,7 +80,7 @@ Click the clock widget, defined in `shell/bar/widgets/ClockWidget.qml`, to open 
 
 Example:
 <div align="center">
-  <img src="images/Media player.png" alt="media player" width="640">
+  <img src="images/Media player.png" alt="media player">
 </div>
 
 ## Notifications
