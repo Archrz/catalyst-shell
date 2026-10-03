@@ -76,7 +76,7 @@ Examples:
 
 ## Media player
 
-Click the clock widget, defined in `shell/bar/widgets/ClockWidget.qml`, to open a popup showing the currently playing media, using MPRIS. The popup only appears when a player is active.
+Click the clock widget, defined in `shell/bar/widgets/ClockWidget.qml`, to open a popup showing the currently playing media, using MPRIS.
 
 Example:
 <div align="center">
@@ -110,6 +110,11 @@ Shortcuts:
 
 When a screen-sharing portal asks what to share, `catalyst-screenshare-chooser` opens a picker to choose a monitor or a single window.
 
+Example:
+<div align="center">
+  <img src="images/screensharing.png" alt="screensharing">
+</div>
+
 ## Notifications
 
 Apps send notifications over the standard desktop notification protocol, the same one `notify-send` uses. <br>
@@ -117,3 +122,8 @@ Apps send notifications over the standard desktop notification protocol, the sam
 
 All notifications are kept in a history, shown in the notification center at `shell/dashboard/NotificationSection.qml`. <br>
 Open it with `catalyst-dashboard` as a command or keybind.
+
+Example:
+<div align="center">
+  <img src="images/dasboard.png" alt="dashboard">
+</div>
