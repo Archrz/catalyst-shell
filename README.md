@@ -6,10 +6,10 @@
 
 ---
 
-This project started out because I didn't like the way noctalia was going anymore.  
-It started out as a fork of [melatonia's](https://github.com/melatonia/meloworld-dotfiles/tree/main) quickshell but, quickly got changed over time.
+This project started out because I didn't like the way noctalia was going anymore. <br>
+It started out as a fork of [melatonia's meloworld](https://github.com/melatonia/meloworld-dotfiles/tree/main) but, quickly got changed over time.
 
-Catalyst-shell has borrowed alot from melatonia but, improves in speed, widgets, markup tools, and more.  
+Catalyst-shell has borrowed alot from melatonia but, improves in speed, markup tools, and more. <br>
 Will be maintained for mangowm and become more personalized over time.
 
 ## Editing the bar
@@ -53,7 +53,7 @@ Example:
 
 ## Launcher
 
-Opened with `catalyst-launcher`, which calls IPC command `launcher toggle`. Type a prefix in the search bar to switch mode:
+Opened with `catalyst-launcher` as a command or keybind. Type a prefix in the search bar to switch mode:
 
 | Prefix | Mode        |
 | ------ | ----------- |
@@ -83,10 +83,37 @@ Example:
   <img src="images/Media player.png" alt="media player">
 </div>
 
+## Screenshots & markup
+
+Pick a region, then edit it before it hits the clipboard.
+
+| Command                    | Does                                         |
+| -------------------------- | -------------------------------------------- |
+| `catalyst-screenshot`      | sends to clipboard                           |
+| `catalyst-screenshot-save` | saves to `~/Pictures/Screenshots`            |
+| `catalyst-markup`          | spawns markup editor then sends to clipboard |
+
+Shortcuts:
+
+- `B` box tool
+- `P` pencil tool
+- `F` fill tool
+- `T` text tool
+- `M` move tool
+- `C` toggle color picker
+- `S` toggle size picker
+- `Ctrl+Z` undo
+- `Enter` copy to clipboard
+- `Esc` cancel
+
+## Screensharing
+
+When a screen-sharing portal asks what to share, `catalyst-screenshare-chooser` opens a picker to choose a monitor or a single window.
+
 ## Notifications
 
-Apps send notifications over the standard desktop notification protocol, the same one `notify-send` uses.
+Apps send notifications over the standard desktop notification protocol, the same one `notify-send` uses. <br>
 `shell/notifications/NotificationPopup.qml` listens for them and shows a popup toast.
 
-All notifications are kept in a history, shown in the notification center at `shell/dashboard/NotificationSection.qml`.
-Open it with `catalyst-dashboard`, which calls IPC command `dashboard toggle`.
+All notifications are kept in a history, shown in the notification center at `shell/dashboard/NotificationSection.qml`. <br>
+Open it with `catalyst-dashboard` as a command or keybind.
