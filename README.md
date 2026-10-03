@@ -106,6 +106,11 @@ Shortcuts:
 - `Enter` copy to clipboard
 - `Esc` cancel
 
+Example:
+<div align="center">
+  <img src="images/markup.png" alt="markup">
+</div>
+
 ## Screensharing
 
 When a screen-sharing portal asks what to share, `catalyst-screenshare-chooser` opens a picker to choose a monitor or a single window.
@@ -125,5 +130,5 @@ Open it with `catalyst-dashboard` as a command or keybind.
 
 Example:
 <div align="center">
-  <img src="images/dasboard.png" alt="dashboard">
+  <img src="images/dashboard.png" alt="dashboard">
 </div>
