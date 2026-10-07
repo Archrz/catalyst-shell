@@ -3,7 +3,6 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Widgets
 import "../theme"
-import "../dock"
 
 Item {
     id: root
@@ -77,7 +76,6 @@ Item {
     Behavior on x { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
     Behavior on y { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
 
-    property bool   appPrefersNonDefault: false
     property bool   isTerminal:           false
     property string execName:             ""
 
@@ -112,13 +110,6 @@ Item {
                 continue
             }
 
-            var prefMatch = line.match(/^PrefersNonDefaultGPU\s*=\s*(.+)$/)
-            if (prefMatch) {
-                if (prefMatch[1].trim() === "true" || prefMatch[1].trim() === "1")
-                    root.appPrefersNonDefault = true
-                continue
-            }
-
             var execMatch = line.match(/^Exec\s*=\s*(.+)$/)
             if (execMatch) {
                 var execLine = execMatch[1].trim()
@@ -130,7 +121,6 @@ Item {
                 }
 
                 if (execLine.includes("switcherooctl") || execLine.includes("prime-run")) {
-                    root.appPrefersNonDefault = true
                     var parts = execLine.split(/\s+/)
                     var realBin = ""
                     var skipNext = false
@@ -157,39 +147,10 @@ Item {
     }
 
     function _buildMenuModel() {
-        var pinned  = PinnedApps.isPinned(root.appId)
-        var entries = [{ label: "Launch", action: "launch", gpuIndex: -1 }]
-
-        if (root.resolvedSteamId !== "") {
-            entries.push({
-                label:    pinned ? "Unpin from dock" : "Pin to dock",
-                action:   pinned ? "unpin" : "pin",
-                gpuIndex: -1
-            })
-            entries.push({ label: "Hide", action: "hide", gpuIndex: -1 })
-            return entries
-        }
-
-        if (DockState.gpuInfoReady) {
-            if (root.appPrefersNonDefault) {
-                if (DockState.defaultGpuName !== "")
-                    entries.push({ label: "Launch with " + DockState.defaultGpuName,
-                                   action: "gpu", gpuIndex: DockState.defaultGpuIndex })
-            } else {
-                if (DockState.nonDefaultGpuName !== "")
-                    entries.push({ label: "Launch with " + DockState.nonDefaultGpuName,
-                                   action: "gpu", gpuIndex: DockState.nonDefaultGpuIndex })
-            }
-        }
-
-        entries.push({
-            label:    pinned ? "Unpin from dock" : "Pin to dock",
-            action:   pinned ? "unpin" : "pin",
-            gpuIndex: -1
-        })
-        entries.push({ label: "Hide", action: "hide", gpuIndex: -1 })
-
-        return entries
+        return [
+            { label: "Launch", action: "launch" },
+            { label: "Hide",   action: "hide" }
+        ]
     }
 
     readonly property string terminal: Quickshell.env("TERMINAL") || "ghostty"
@@ -214,13 +175,6 @@ Item {
             }
         }
 
-        LauncherState.hide()
-    }
-
-    function _launchOnGpu(gpuIndex) {
-        AppUsageTracker.recordLaunch(root.appId)
-        var bin = root.execName !== "" ? root.execName : root.appId
-        Quickshell.execDetached(["/usr/bin/switcherooctl", "launch", "-g", String(gpuIndex), bin])
         LauncherState.hide()
     }
 
@@ -492,12 +446,6 @@ Item {
                                     var action = modelData.action
                                     if (action === "launch") {
                                         root._launchDefault()
-                                    } else if (action === "gpu") {
-                                        root._launchOnGpu(modelData.gpuIndex)
-                                    } else if (action === "pin") {
-                                        PinnedApps.pinApp(root.appId, root.appName, root.appIcon, root.execName, root.resolvedSteamId)
-                                    } else if (action === "unpin") {
-                                        PinnedApps.unpinApp(root.appId)
                                     } else if (action === "hide") {
                                         LauncherHiddenApps.hide(root.appId, root.appName, root.appIcon)
                                     }

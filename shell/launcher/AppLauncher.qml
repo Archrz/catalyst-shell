@@ -6,7 +6,6 @@ import QtCore
 import Quickshell.Wayland
 import Quickshell.Widgets
 import "../theme"
-import "../dock"
 
 PanelWindow {
     id: root

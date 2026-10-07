@@ -4,7 +4,6 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Wayland
 import "../theme"
-import "../dock"
 
 Item {
     id: root
@@ -408,12 +407,6 @@ Item {
                                             var action = modelData.action
                                             if (action === "launch") {
                                                 icon._launchDefault()
-                                            } else if (action === "gpu") {
-                                                icon._launchOnGpu(modelData.gpuIndex)
-                                            } else if (action === "pin") {
-                                                PinnedApps.pinApp(icon.appId, icon.appName, icon.appIcon, icon.execName, icon.resolvedSteamId)
-                                            } else if (action === "unpin") {
-                                                PinnedApps.unpinApp(icon.appId)
                                             } else if (action === "hide") {
                                                 LauncherHiddenApps.hide(icon.appId, icon.appName, icon.appIcon)
                                             }
